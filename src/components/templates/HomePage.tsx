@@ -17,21 +17,23 @@ export type coin = {
 export default function HomePage () {
     const [coins , setCoins ] = useState<coin[]>([]);
     const [isLoading , setIsLoading] = useState<boolean>(true);
+    const [page , setPage ] = useState<number>(1);
 
     useEffect(() => {
+        setIsLoading(true);
         const getData = async () => {
-            const res = await fetch(getCoinList());
+            const res = await fetch(getCoinList(page));
             const json = await res.json();
             setCoins(json);
             setIsLoading(false);
         }
 
         getData();
-    }, [])
+    }, [page])
   return (
     <div>
-        <Pagination />
-          <Tablecoin coins={coins} isLoading={isLoading}/>
+        <Pagination page={page} setPage={setPage} />
+        <Tablecoin coins={coins} isLoading={isLoading}/>
     </div>
   );
 }
