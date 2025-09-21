@@ -15,19 +15,21 @@ export type coin = {
 
 export default function HomePage () {
     const [coins , setCoins ] = useState<coin[]>([]);
+    const [isLoading , setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const getData = async () => {
             const res = await fetch(getCoinList());
             const json = await res.json();
-            setCoins(json)
+            setCoins(json);
+            setIsLoading(false);
         }
 
         getData();
     }, [])
   return (
     <div>
-          <Tablecoin coins={coins}/>
+          <Tablecoin coins={coins} isLoading={isLoading}/>
     </div>
   );
 }

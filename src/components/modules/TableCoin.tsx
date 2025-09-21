@@ -1,15 +1,21 @@
 import type { coin } from "../templates/HomePage";
 import chartUp from "../../assets/chart-up.svg";
 import chartDown from "../../assets/chart-down.svg";
+import { RotatingLines } from "react-loader-spinner";
 
-type TableCoinProps = {
+type TableCoinsProps = {
   coins: coin[];
+  isLoading: boolean;
 };
 
-export default function Tablecoin({ coins }: TableCoinProps) {
+type TableCoinProps = {
+  coin: coin;
+};
+export default function Tablecoin({ coins , isLoading }: TableCoinsProps) {
   return (
     <div className="overflow-x-auto shadow-lg rounded-xl border border-gray-200">
-      <table className="min-w-full divide-y divide-gray-200 bg-white">
+        {isLoading ? (<RotatingLines strokeColor="#3874ff" strokeWidth="2" />) : (
+                      <table className="min-w-full divide-y divide-gray-200 bg-white">
         <thead className="bg-gray-50">
           <tr>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -31,7 +37,19 @@ export default function Tablecoin({ coins }: TableCoinProps) {
         </thead>
         <tbody className="divide-y divide-gray-100">
           {coins?.map((coin) => (
-            <tr
+            <TableRow coin={coin} /> 
+          ))}
+        </tbody>
+      </table>
+
+        )}
+    </div>
+  );
+}
+
+export const TableRow = ({coin} : TableCoinProps ) => {
+    return(
+                    <tr
               key={coin.id}
               className="hover:bg-gray-50 transition-colors duration-150 cursor-pointer"
             >
@@ -65,10 +83,5 @@ export default function Tablecoin({ coins }: TableCoinProps) {
                 <img alt={coin.name} src={coin.price_change_percentage_24h > 0 ? chartUp : chartDown } />
               </td>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+    )
 }
-
