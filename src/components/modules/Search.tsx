@@ -14,18 +14,29 @@ export default function Search ({setCurrency , currency} : currencyProps) {
     const [coins , setCoins] = useState<object[]>([])
 
     useEffect(() => {
-        
+        const  controller = new AbortController()
+
         if (!text) return;
 
         const search = async () => {
-            const res = await fetch(searchCoin(text))
-            const json = await res.json();
-            console.log(json);
-            if (json.coins) setCoins(json.coins); 
+            try {
+                const res = await fetch(searchCoin(text), {signal : controller.signal})
+                const json = await res.json();
+                console.log(json);                
+                if (json.coins){
+                    setCoins(json.coins);
+                }  else{
+                    alert(json.status)
+                }
+           } catch (error) {
+                console.log(error);
+            }
+
+
         }
 
         search();
-
+        return () => controller.abort();
     }, [text])
 
   return (
