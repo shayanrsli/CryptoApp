@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Tablecoin from "../modules/TableCoin";
 import { getCoinList } from "../services/CryptoApi";
+import Pagination from "../modules/Pagination";
 
 
 export type coin = {
@@ -29,6 +30,7 @@ export default function HomePage () {
     }, [])
   return (
     <div>
+        <Pagination />
           <Tablecoin coins={coins} isLoading={isLoading}/>
     </div>
   );
