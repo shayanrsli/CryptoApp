@@ -8,6 +8,9 @@ export type coin = {
     name:string;
     image:string;
     current_price: number;
+    symbol: string;
+    price_change_percentage_24h: number;
+    total_volume: string;
 }
 
 export default function HomePage () {
@@ -20,7 +23,7 @@ export default function HomePage () {
             setCoins(json)
         }
 
-        getData()
+        getData();
     }, [])
   return (
     <div>
