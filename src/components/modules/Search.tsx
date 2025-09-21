@@ -8,14 +8,27 @@ type currencyProps = {
     setCurrency : Dispatch<SetStateAction<exchangeType>>
 }
 
+type coinType  = {
+    thumb:string;
+    name : string;
+    id: number;
+}
 export default function Search ({setCurrency , currency} : currencyProps) {
 
     const [text , setText] = useState<string>("")
-    const [coins , setCoins] = useState<object[]>([])
+    const [coins, setCoins] = useState<coinType[]>([{
+    thumb: "",
+    name: "",
+    id: 0
+    }]);
 
     useEffect(() => {
         const  controller = new AbortController()
-
+        setCoins([{
+            thumb: "",
+            name: "",
+            id: 0
+        }])
         if (!text) return;
 
         const search = async () => {
@@ -47,6 +60,15 @@ export default function Search ({setCurrency , currency} : currencyProps) {
         <option value="eur">EUR</option>
         <option value="jpy">JPY</option>
       </select> 
+
+      <div>
+        <ul>
+            {coins.map(coin => <li key={coin.id}>
+                <img src={coin.thumb} alt={coin.name} />
+                <p>{coin.name}</p>
+            </li>)}
+        </ul>
+      </div>
     </div>
   );
 }
