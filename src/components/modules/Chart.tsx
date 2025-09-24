@@ -1,12 +1,18 @@
 
 import { useState, type SetStateAction , type Dispatch } from "react";
+import { ConverData } from "../../helpers/ConverData";
 
 type chartProps = {
     chart : boolean;
     setChart : Dispatch<SetStateAction<boolean>>
 }
+
+export type chartType = "prices" | "market_caps" | ""
+
 export default function Chart({chart , setChart} : chartProps) {
- 
+    const [type , setType ] = useState<chartType>("prices")
+    console.log(ConverData(chart , type));
+
   if (!chart) return null;
 
   return (
