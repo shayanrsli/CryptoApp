@@ -2,17 +2,20 @@ import type { coin } from "../templates/HomePage";
 import chartUp from "../../assets/chart-up.svg";
 import chartDown from "../../assets/chart-down.svg";
 import { RotatingLines } from "react-loader-spinner";
+import type { Dispatch, SetStateAction } from "react";
 
 type TableCoinsProps = {
   coins: coin[];
   isLoading: boolean;
+  setChart: Dispatch<SetStateAction<boolean>>
 };
 
 type TableCoinProps = {
   coin: coin;
+  setChart: Dispatch<SetStateAction<boolean>>
 };
 
-export default function Tablecoin({ coins, isLoading }: TableCoinsProps) {
+export default function Tablecoin({ coins, isLoading ,setChart }: TableCoinsProps) {
   return (
     <div className="overflow-x-auto rounded-xl bg-black p-4">
       {isLoading ? (
@@ -43,7 +46,7 @@ export default function Tablecoin({ coins, isLoading }: TableCoinsProps) {
           </thead>
           <tbody className="divide-y divide-gray-800">
             {coins?.map((coin) => (
-              <TableRow key={coin.id} coin={coin} />
+              <TableRow key={coin.id} coin={coin}  setChart={setChart} />
             ))}
           </tbody>
         </table>
@@ -52,10 +55,14 @@ export default function Tablecoin({ coins, isLoading }: TableCoinsProps) {
   );
 }
 
-export const TableRow = ({ coin }: TableCoinProps) => {
+export const TableRow = ({ coin , setChart }: TableCoinProps) => {
+
+  const showHandler = () => {
+    setChart(true);
+  }
   return (
     <tr className="hover:bg-gray-900 transition-colors duration-150 cursor-pointer">
-      <td className="px-4 py-3 flex items-center gap-3">
+      <td className="px-4 py-3 flex items-center gap-3" onClick={showHandler}>
         <img
           src={coin.image}
           alt={coin.name}
