@@ -3,16 +3,17 @@ import chartUp from "../../assets/chart-up.svg";
 import chartDown from "../../assets/chart-down.svg";
 import { RotatingLines } from "react-loader-spinner";
 import type { Dispatch, SetStateAction } from "react";
+import { marketChart } from "../services/CryptoApi";
 
 type TableCoinsProps = {
   coins: coin[];
-  isLoading: boolean;
-  setChart: Dispatch<SetStateAction<boolean>>
+  isLoading: any;
+  setChart: Dispatch<SetStateAction<any>>
 };
 
 type TableCoinProps = {
   coin: coin;
-  setChart: Dispatch<SetStateAction<boolean>>
+  setChart: Dispatch<SetStateAction<any>>
 };
 
 export default function Tablecoin({ coins, isLoading ,setChart }: TableCoinsProps) {
@@ -57,8 +58,15 @@ export default function Tablecoin({ coins, isLoading ,setChart }: TableCoinsProp
 
 export const TableRow = ({ coin , setChart }: TableCoinProps) => {
 
-  const showHandler = () => {
-    setChart(true);
+  const showHandler = async () => {
+     try {
+        const res = await fetch(marketChart(coin.id))
+        const json = await  res.json()
+        console.log(json);
+        setChart(json)
+     } catch (error) {
+        setChart(null)
+     }
   }
   return (
     <tr className="hover:bg-gray-900 transition-colors duration-150 cursor-pointer">

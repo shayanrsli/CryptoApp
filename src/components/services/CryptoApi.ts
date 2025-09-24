@@ -10,3 +10,4 @@ export const getCoinList = (page : number , currency: exchangeType) =>
 export const searchCoin = (query : string) => 
     `${BASE_URL}/search?query=${query}&x_cg_demo_api_key=${APIKEY}`
 
+export const marketChart = (coin : any) => `${BASE_URL}/coins/${coin}/market_chart/?vs_currency=usd&days=7`

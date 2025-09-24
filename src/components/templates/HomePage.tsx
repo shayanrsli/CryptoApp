@@ -24,7 +24,7 @@ export default function HomePage () {
     const [isLoading , setIsLoading] = useState<boolean>(true);
     const [page , setPage ] = useState<number>(1);
     const [currency , setCurrency ] = useState<exchangeType>("usd");
-    const [chart , setChart ] = useState<boolean>(false);
+    const [chart , setChart ] = useState<any>(false);
 
     useEffect(() => {
         setIsLoading(true);
@@ -42,7 +42,7 @@ export default function HomePage () {
         <Search currency={currency} setCurrency={setCurrency} />
         <Tablecoin coins={coins} isLoading={isLoading} setChart={setChart}/>
         <Pagination page={page} setPage={setPage} />
-        {chart && <Chart  setChart={setChart} chart={chart} />}
+        {!!chart && <Chart  setChart={setChart} chart={chart} />}
     </div>
   );
 }
