@@ -63,7 +63,7 @@ export const TableRow = ({ coin , setChart }: TableCoinProps) => {
         const res = await fetch(marketChart(coin.id))
         const json = await  res.json()
         console.log(json);
-        setChart(json)
+        setChart({...json , coin})
      } catch (error) {
         setChart(null)
      }
