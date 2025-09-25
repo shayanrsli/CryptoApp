@@ -7,7 +7,7 @@ type chartProps = {
   setChart: Dispatch<SetStateAction<boolean>>;
 };
 
-export type chartType = "prices" | "market_caps" | "total_volume";
+export type chartType = "prices" | "market_caps" | "total_volumes";
 
 export default function Chart({ chart, setChart }: chartProps) {
   const [type, setType] = useState<chartType>("prices");
@@ -68,9 +68,9 @@ export default function Chart({ chart, setChart }: chartProps) {
             Market Caps
           </button>
           <button
-            onClick={() => setType("")}
+            onClick={() => setType("total_volumes")}
             className={`px-4 py-2 rounded-lg transition ${
-              type === ""
+              type === "total_volumes"
                 ? "bg-blue-500 text-white"
                 : "bg-white/20 hover:bg-white/30 text-white"
             }`}
